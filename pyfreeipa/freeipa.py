@@ -51,7 +51,37 @@ class ipa(object):
         self.sslverify = sslverify
         self.log = logging.getLogger(__name__)
         self.session = requests.Session()
+        self.helpers = ['Admins', 'Developers']
 
+    def validateName(self, name):
+        for a in self.makeName(name):
+            if a.isalpha() or a.isdigit() or a in ['_', '-', '.','$']:
+                pass
+            else:
+                logger.error("Unallowed sympol {a}".format(a=a))
+                exit(1)
+    def getDnWithHelpers(self, projectname):
+        dns = []
+        for group in self.getNamesWithHelpers(projectname):
+            dns.append(self.group_find(group)['result']['result'][0]['dn'][3:])
+        return dns
+    def getNamesWithHelpers(self, projectname):
+        groups = [self.makeName(projectname),]
+        for group in self.helpers:
+            childGroupDescription = projectname + ' ' + group
+            groups.append(self.makeName(childGroupDescription))
+        return groups
+    def makeName(self, string):
+        return 'tc_' + string.lower().replace(' ', '_')
+
+    def createHelpers(self, projectname):
+        mainGroup = self.makeName(projectname)
+        for group in self.helpers:
+            childGroupDescription = projectname + ' ' + group
+            childGroup = self.makeName(childGroupDescription)
+            self.group_add(group=childGroup, description=childGroupDescription)
+            # Make helper groups a child
+            self.group_add_member(group=mainGroup, item=childGroup, membertype='group')
     def login(self, user, password):
         rv = None
         ipaurl = 'https://{0}/ipa/session/login_password'.format(self.server)
