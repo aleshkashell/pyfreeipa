@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'pyfreeipa',
   packages = ['pyfreeipa'], # this must be the same as the name above
-  version = '0.1',
+  version = '0.1.2',
   description = 'Module for work with freeipa',
   author = 'Sheludchenkov Aleksey',
   author_email = 'aleshkashell@gmail.com',
