@@ -13,7 +13,7 @@ setup(
   install_requires=[
           'requests',
           'kerberos',
-          'git+https://github.com/nordnet/python-freeipa-json.git',
+          'git+https://github.com/nordnet/python-freeipa-json.git#egg=python-freeipa-json',
           'dnspython',
       ],
 )
