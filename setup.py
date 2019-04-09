@@ -16,4 +16,7 @@ setup(
           'python-freeipa-json',
           'dnspython',
       ],
+  dependency_links = [
+    'git+https://github.com/nordnet/python-freeipa-json.git#egg=python-freeipa-json'
+  ]
 )
