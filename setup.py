@@ -13,7 +13,6 @@ setup(
   install_requires=[
           'requests',
           'kerberos',
-          'python-freeipa-json',
           'dnspython',
       ],
   dependency_links = [
